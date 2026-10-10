@@ -1,15 +1,24 @@
 import requests
 import time
 import datetime
+import os
 
 url = "https://ckan2.multimediagdansk.pl/gpsPositions"
 
-save_file = "data/test.jsonl"
+#stworzenie katalogu do zapisu
+os.makedirs("data", exist_ok=True)
 
 #to jedna godzina
 work_time_seconds = 300
 
-now = datetime.now()
+
+def write_data(data):
+    now = datetime.datetime.now()
+    save_file = now.strftime("%Y-%m-%d")
+    save_path = f"data/{save_file}.jsonl"
+    with open(save_path, "a", encoding="utf-8") as file:
+                file.write(data.text + "\n")
+
 
 
 def get_data(url):
@@ -20,17 +29,10 @@ def get_data(url):
             time.sleep(15)
             return get_data(url)
         if response.status_code == 200:
-            # with open(save_file, "a", encoding="utf-8") as file:
-            #     file.write(response.text + "\n")
             write_data(response)
     except Exception as e:
         print("error occured: ", e)
     
-
-def write_data(data):
-    save_file = str(now.year+"_"+now.day)
-    with open(save_file, "a", encoding="utf-8") as file:
-                file.write(data.text + "\n")
 
 start_time = time.time()
 while time.time() - start_time < work_time_seconds:
