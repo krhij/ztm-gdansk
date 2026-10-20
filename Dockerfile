@@ -1,6 +1,5 @@
 FROM python:3.13-slim
 
-#to zeby printy dzialaly ze skryptu
 ENV PYTHONUNBUFFERED=1
 
 #to zeby czas dzialal

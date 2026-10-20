@@ -1,0 +1,10 @@
+services:
+  scraper:
+    build: .
+    container_name: scraper_script
+    environment:
+      # to zeby printy dzialaly ze skryptu
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
