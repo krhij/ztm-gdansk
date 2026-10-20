@@ -27,7 +27,6 @@ def get_data(url):
         #obsluga timeout
         if (response.status_code == 429):
             time.sleep(15)
-            return get_data(url)
         if response.status_code == 200:
             write_data(response)
     except Exception as e:
